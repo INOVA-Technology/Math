@@ -12,7 +12,7 @@ class Equations
 	C = 3e8
 
 	def hz_to_m(frequency)
-		(C / frequency).round
+		(C / frequency)
 	end
 
 	alias_method :m_to_hz, :hz_to_m
@@ -29,11 +29,16 @@ class Cli
 	end
 
 	def help
-		["Available Equations:",
+		["To use an equation, just type something like this: m-to-hz 100",
+		"Thats 100 meters, converted to hertz",
+		"You can use e for scientific notation. Eg. 3e5 = 300000",
+		"Available Equations:",
 		(@equations.public_methods(false) - [:method_missing]).map { |eq| eq.to_s.gsub(/_/, "-") }]
+		
 	end
 
 	def method_missing(m, *args, &block)
+		# checks if it only contains numbers, math symbols, and e
 		if args.all? { |arg| arg.match(/\A[\d+\-*\/.e ]+\z/) }
 			args.map! { |arg| eval(arg) }
 			[@equations.send(m, *args)]

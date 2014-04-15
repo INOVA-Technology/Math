@@ -4,21 +4,23 @@ require "minitest/autorun"
 require "minitest/pride"
 load "convert"
 
-define Equations do
+describe Equations do
 
 	before do
 		@equations = Equations.new
 	end
 
-	define "hz_to_m" do
+	describe "hz_to_m" do
 		it "must return correct value" do
-
+			@equations.hz_to_m(300e12).must_equal 1.0e-06
+			@equations.hz_to_m(3e6).must_equal 100
 		end
 	end
 
-	define "m_to_hz" do
+	describe "m_to_hz" do
 		it "must return correct value" do
-			
+			@equations.m_to_hz(100e3).must_equal 3e3
+			@equations.m_to_hz(100.0e-12).must_equal 3e18
 		end
 	end
 
