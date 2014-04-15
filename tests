@@ -24,6 +24,24 @@ describe Equations do
 		end
 	end
 
+	describe "quadratic_formula" do
+		it "must return correct value" do
+			@equations.quadratic_formula(1, 2, -3).must_equal [1.0, -3.0]
+		end
+	end
+
+	describe "pythg_thrm_a_b" do
+		it "must return correct value" do
+			@equations.pythg_thrm_a_b(3, 4).must_equal 5
+		end
+	end
+
+	describe "pythg_thrm_b_c" do
+		it "must return correct value" do
+			@equations.pythg_thrm_b_c(4, 5).must_equal 3
+		end
+	end
+
 	describe "equation does not exist" do
 		it "must warn user" do
 			@equations.doesnt_exist(500).must_equal "That equation doesn't exist here yet."

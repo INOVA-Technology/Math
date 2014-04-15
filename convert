@@ -12,10 +12,24 @@ class Equations
 	C = 3e8
 
 	def hz_to_m(frequency)
-		(C / frequency)
+		C / frequency
 	end
 
 	alias_method :m_to_hz, :hz_to_m
+
+	def quadratic_formula(a, b, c)
+		positive = (-b + Math.sqrt(b**2 - 4 * a * c)) / 2 * a
+		negative = (-b - Math.sqrt(b**2 - 4 * a * c)) / 2 * a
+		[positive, negative]
+	end
+
+	def pythg_thrm_a_b(a, b)
+		Math.sqrt(a**2+b**2)
+	end
+
+	def pythg_thrm_b_c(b, c)
+		Math.sqrt(c**2-b**2)
+	end
 
 	def method_missing(m, *args, &block)
 		"That equation doesn't exist here yet."
@@ -63,10 +77,10 @@ cli = Cli.new
 if __FILE__ == $0
 	puts "Type help for help."
 	loop do
-		command, variable = Readline::readline("> ", true).downcase.strip.squeeze(" ").split(" ")
+		command, *variables = Readline::readline("> ", true).downcase.strip.squeeze(" ").split(" ")
 		unless command.nil?
 			command.gsub!(/-/, "_")
-			puts cli.send(command, *variable)
+			puts cli.send(command, *variables)
 		end
 	end
 end
