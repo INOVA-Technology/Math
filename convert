@@ -18,7 +18,7 @@ class Equations
 	alias_method :m_to_hz, :hz_to_m
 
 	def method_missing(m, *args, &block)
-		"That equation doesn't exsist here yet."
+		"That equation doesn't exist here yet."
 	end
 end
 
@@ -31,7 +31,8 @@ class Cli
 	def help
 		["To use an equation, just type something like this: m-to-hz 100",
 		"Thats 100 meters, converted to hertz",
-		"You can use e for scientific notation. Eg. 3e5 = 300000",
+		"You also can use e for scientific notation. Eg. 3e5 = 300000",
+		"Type quit to quit",
 		"Available Equations:",
 		(@equations.public_methods(false) - [:method_missing]).map { |eq| eq.to_s.gsub(/_/, "-") }]
 		
@@ -60,6 +61,7 @@ end
 cli = Cli.new
 
 if __FILE__ == $0
+	puts "Type help for help."
 	loop do
 		command, variable = Readline::readline("> ", true).downcase.strip.squeeze(" ").split(" ")
 		unless command.nil?
