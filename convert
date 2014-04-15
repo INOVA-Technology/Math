@@ -42,9 +42,9 @@ class Cli
 		# checks if it only contains numbers, math symbols, and e
 		if args.all? { |arg| arg.match(/\A[\d+\-*\/.e ]+\z/) }
 			args.map! { |arg| eval(arg) }
-			[@equations.send(m, *args)]
+			@equations.send(m, *args)
 		else
-			["Invalid Number"]
+			"Invalid number"
 		end
 	end
 

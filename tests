@@ -24,4 +24,33 @@ describe Equations do
 		end
 	end
 
+	describe "equation does not exist" do
+		it "must warn user" do
+			@equations.doesnt_exist(500).must_equal "That equation doesn't exist here yet."
+		end
+	end
+
+end
+
+describe "Cli" do
+
+	before do
+		@cli = Cli.new
+		@error_msg = "Invalid number"
+	end
+
+	describe "an equation is ran" do
+		it "must warn user if an invalid number is used" do
+			@cli.doesnt_matter("hello").must_equal @error_msg
+			@cli.doesnt_matter("34five").must_equal @error_msg
+			@cli.doesnt_matter("q12").must_equal @error_msg
+		end
+
+		it "must work if a valid equation is ran" do
+			@cli.doesnt_matter("123").wont_equal @error_msg
+			@cli.doesnt_matter("12e3").wont_equal @error_msg
+			@cli.doesnt_matter("1e-4").wont_equal @error_msg
+		end
+	end
+
 end
