@@ -4,7 +4,7 @@ require "rubygems"
 gem "minitest"
 require "minitest/autorun"
 require "minitest/pride"
-load "convert"
+load "solve"
 
 describe Equations do
 
@@ -12,35 +12,35 @@ describe Equations do
 		@equations = Equations.new
 	end
 
-	describe "hz_to_m" do
+	describe "m_with_hz" do
 		it "must return correct value" do
-			@equations.hz_to_m(300e12).must_equal 1.0e-06
-			@equations.hz_to_m(3e6).must_equal 100
+			@equations.m_with_hz(300e12).must_equal 1.0e-06
+			@equations.m_with_hz(3e6).must_equal 100
 		end
 	end
 
-	describe "m_to_hz" do
+	describe "hz_with_m" do
 		it "must return correct value" do
-			@equations.m_to_hz(100e3).must_equal 3e3
-			@equations.m_to_hz(100.0e-12).must_equal 3e18
+			@equations.hz_with_m(100e3).must_equal 3e3
+			@equations.hz_with_m(100.0e-12).must_equal 3e18
 		end
 	end
 
-	describe "quadratic_formula" do
+	describe "qudrtc_frml_with_a_b_c" do
 		it "must return correct value" do
-			@equations.quadratic_formula(1, 2, -3).must_equal [1.0, -3.0]
+			@equations.qudrtc_frml_with_a_b_c(1, 2, -3).must_equal [1.0, -3.0]
 		end
 	end
 
-	describe "pythg_thrm_a_b" do
+	describe "pythg_thrm_with_a_b" do
 		it "must return correct value" do
-			@equations.pythg_thrm_a_b(3, 4).must_equal 5
+			@equations.pythg_thrm_with_a_b(3, 4).must_equal 5
 		end
 	end
 
-	describe "pythg_thrm_b_c" do
+	describe "pythg_thrm_with_b_c" do
 		it "must return correct value" do
-			@equations.pythg_thrm_b_c(4, 5).must_equal 3
+			@equations.pythg_thrm_with_b_c(4, 5).must_equal 3
 		end
 	end
 
@@ -67,7 +67,7 @@ describe "Cli" do
 		end
 
 		it "must work if a valid equation is ran" do
-			@cli.doesnt_matter("123").wont_equal @error_msg
+			@cli.doesnt_matter("123.3").wont_equal @error_msg
 			@cli.doesnt_matter("12e3").wont_equal @error_msg
 			@cli.doesnt_matter("1e-4").wont_equal @error_msg
 		end

@@ -11,23 +11,23 @@ class Equations
 
 	C = 3e8
 
-	def hz_to_m(frequency)
+	def m_with_hz(frequency)
 		C / frequency
 	end
 
-	alias_method :m_to_hz, :hz_to_m
+	alias_method :hz_with_m, :m_with_hz
 
-	def quadratic_formula(a, b, c)
+	def qudrtc_frml_with_a_b_c(a, b, c)
 		positive = (-b + Math.sqrt(b**2 - 4 * a * c)) / 2 * a
 		negative = (-b - Math.sqrt(b**2 - 4 * a * c)) / 2 * a
 		[positive, negative]
 	end
 
-	def pythg_thrm_a_b(a, b)
+	def pythg_thrm_with_a_b(a, b)
 		Math.sqrt(a**2+b**2)
 	end
 
-	def pythg_thrm_b_c(b, c)
+	def pythg_thrm_with_b_c(b, c)
 		Math.sqrt(c**2-b**2)
 	end
 
