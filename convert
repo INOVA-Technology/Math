@@ -29,16 +29,16 @@ class Cli
 	end
 
 	def help
-		puts "Available Equations:"
-		puts (@equations.public_methods(false) - [:method_missing]).map { |eq| eq.to_s.gsub(/_/, "-") }
+		["Available Equations:",
+		(@equations.public_methods(false) - [:method_missing]).map { |eq| eq.to_s.gsub(/_/, "-") }]
 	end
 
 	def method_missing(m, *args, &block)
 		if args.all? { |arg| arg.match(/\A[\d+\-*\/.e ]+\z/) }
 			args.map! { |arg| eval(arg) }
-			puts @equations.send(m, *args)
+			[@equations.send(m, *args)]
 		else
-			puts "Invalid Number"
+			["Invalid Number"]
 		end
 	end
 
@@ -59,7 +59,7 @@ if __FILE__ == $0
 		command, variable = Readline::readline("> ", true).downcase.strip.squeeze(" ").split(" ")
 		unless command.nil?
 			command.gsub!(/-/, "_")
-			cli.send(command, *variable)
+			puts cli.send(command, *variable)
 		end
 	end
 end
