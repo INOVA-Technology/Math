@@ -43,8 +43,10 @@ class Cli
 	end
 
 	def help
-		["To use an equation, just type something like this: m-to-hz 100",
+		["To use an equation, just type something like this: hz_with_m 100",
 		"Thats 100 meters, converted to hertz",
+		"Or something like this: pythg-thrm-with-b-c 4 5",
+		"That's a^2 = 5^2 - 4^2, or more familiarly, a^2 + 4^2 = 5^2",
 		"You also can use e for scientific notation. Eg. 3e5 = 300000",
 		"Type quit to quit",
 		"Available Equations:",
@@ -76,6 +78,10 @@ cli = Cli.new
 
 if __FILE__ == $0
 	puts "Type help for help."
+	list = (Equations.instance_methods - [:method_missing]).map(&:to_s)
+	comp = proc { |s| list.grep(/^#{Regexp.escape(s)}/) }
+	Readline.completion_append_character = " "
+	Readline.completion_proc = comp
 	loop do
 		command, *variables = Readline::readline("> ", true).downcase.strip.squeeze(" ").split(" ")
 		unless command.nil?
