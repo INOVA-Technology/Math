@@ -23,13 +23,13 @@ class Equations
 		[positive, negative]
 	end
 
-	def pythg_thrm_with_a_b(a, b)
+	def pythgrn_thrm_with_a_b(a, b)
 		a = Math.sqrt(a**2+b**2)
 		a = "sqrt(#{(a**2).round})" unless a.to_i == a
 		a
 	end
 
-	def pythg_thrm_with_b_c(b, c)
+	def pythgrn_thrm_with_b_c(b, c)
 		a = Math.sqrt(c**2-b**2)
 		a = "sqrt(#{(a**2).round})" unless a.to_i == a
 		a
@@ -49,7 +49,7 @@ class Cli
 	def help
 		["To use an equation, just type something like this: hz_with_m 100",
 		"Thats 100 meters, converted to hertz",
-		"Or something like this: pythg-thrm-with-b-c 4 5",
+		"Or something like this: pythgrn-thrm-with-b-c 4 5",
 		"That's a^2 = 5^2 - 4^2, or more familiarly, a^2 + 4^2 = 5^2",
 		"You also can use e for scientific notation. Eg. 3e5 = 300000",
 		"Type quit to quit",
