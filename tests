@@ -35,12 +35,14 @@ describe Equations do
 	describe "pythg_thrm_with_a_b" do
 		it "must return correct value" do
 			@equations.pythg_thrm_with_a_b(3, 4).must_equal 5
+			@equations.pythg_thrm_with_a_b(4, 5).must_equal "sqrt(41)"
 		end
 	end
 
 	describe "pythg_thrm_with_b_c" do
 		it "must return correct value" do
 			@equations.pythg_thrm_with_b_c(4, 5).must_equal 3
+			@equations.pythg_thrm_with_b_c(3, 4).must_equal "sqrt(7)"
 		end
 	end
 

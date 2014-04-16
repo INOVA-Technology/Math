@@ -24,11 +24,15 @@ class Equations
 	end
 
 	def pythg_thrm_with_a_b(a, b)
-		Math.sqrt(a**2+b**2)
+		a = Math.sqrt(a**2+b**2)
+		a = "sqrt(#{(a**2).round})" unless a.to_i == a
+		a
 	end
 
 	def pythg_thrm_with_b_c(b, c)
-		Math.sqrt(c**2-b**2)
+		a = Math.sqrt(c**2-b**2)
+		a = "sqrt(#{(a**2).round})" unless a.to_i == a
+		a
 	end
 
 	def method_missing(m, *args, &block)
