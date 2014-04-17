@@ -8,8 +8,7 @@ require "readline"
 # 			  12 => "T", 15 => "P", 18 => "E" }
 
 def define_equation clas, file
-	# I don't know why/how this works... But it does
-	File.readlines(file).each { |line|
+	File.foreach(file) { |line|
 		name, var, equation = line.split(":")
 		clas.instance_eval %[
 			def #{name}(#{var})
@@ -18,6 +17,12 @@ def define_equation clas, file
 		]
 	}
 	# eval(#{equation}.gsub!(/#{var_name}/, #{var}))
+end
+
+class Array
+	def swap_underscores
+		map { |i| i.to_s.gsub(/_/, "-")}
+	end
 end
 
 class Equations
@@ -69,7 +74,7 @@ class Cli
 		"You also can use e for scientific notation. Eg. 3e5 = 300000",
 		"Type quit to quit",
 		"Available Equations:",
-		(@equations.public_methods(false) - [:method_missing]).map { |eq| eq.to_s.gsub(/_/, "-") }]
+		(@equations.public_methods(false) - [:method_missing]).swap_underscores]
 		
 	end
 
@@ -99,9 +104,7 @@ end
 
 if __FILE__ == $0
 	puts "Type help for help."
-	list = (Equations.instance_methods(false) - [:method_missing]).map(&:to_s).map { |eq|
-		eq.gsub(/_/, "-")
-	}
+	list = (Equations.instance_methods(false) - [:method_missing]).swap_underscores
 	comp = proc { |s| list.grep(/^#{Regexp.escape(s)}/) }
 	Readline.completion_append_character = " "
 	Readline.completion_proc = comp
