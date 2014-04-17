@@ -16,7 +16,6 @@ def define_equation clas, file
 			end
 		]
 	}
-	# eval(#{equation}.gsub!(/#{var_name}/, #{var}))
 end
 
 class Array
