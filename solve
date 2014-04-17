@@ -7,6 +7,19 @@ require "readline"
 # 			  3 => "k", 6 => "M", 9 => "G",
 # 			  12 => "T", 15 => "P", 18 => "E" }
 
+def define_equation clas, file
+	# I don't know why/how this works... But it does
+	File.readlines(file).each { |line|
+		name, var, equation = line.split(":")
+		clas.instance_eval %[
+			def #{name}(#{var})
+				#{equation}
+			end
+		]
+	}
+	# eval(#{equation}.gsub!(/#{var_name}/, #{var}))
+end
+
 class Equations
 
 	C = 3e8
@@ -18,29 +31,31 @@ class Equations
 	alias_method :hz_with_m, :m_with_hz
 
 	def qudrtc_frml_with_a_b_c(a, b, c)
-		positive = (-b + Math.sqrt(b**2 - 4 * a * c)) / 2 * a
-		negative = (-b - Math.sqrt(b**2 - 4 * a * c)) / 2 * a
+		positive = (-b + Math.sqrt(b ** 2 - 4 * a * c)) / 2 * a
+		negative = (-b - Math.sqrt(b ** 2 - 4 * a * c)) / 2 * a
 		[positive, negative]
 	end
 
 	def pythgrn_thrm_with_a_b(a, b)
-		a = Math.sqrt(a**2+b**2)
-		a = "sqrt(#{(a**2).round})" unless a.to_i == a
+		a = Math.sqrt(a ** 2 + b ** 2)
+		a = "sqrt(#{(a ** 2).round})" unless a.to_i == a
 		a
 	end
 
 	def pythgrn_thrm_with_b_c(b, c)
-		a = Math.sqrt(c**2-b**2)
-		a = "sqrt(#{(a**2).round})" unless a.to_i == a
+		a = Math.sqrt(c ** 2 - b ** 2)
+		a = "sqrt(#{(a ** 2).round})" unless a.to_i == a
 		a
 	end
 
 	def method_missing(m, *args, &block)
-		"That equation doesn't exist here yet."
+		"That equation doesn't exist here. (yet)"
 	end
 end
 
 class Cli
+
+	attr_reader :equations
 
 	def initialize
 		@equations = Equations.new
@@ -74,18 +89,23 @@ class Cli
 
 end
 
-# def load_functions file
-# 	define_method
-# end
-
 cli = Cli.new
+
+case ARGV[0]
+when "-l", "--load"
+	ARGV.shift
+	define_equation(cli.equations, ARGV.shift)
+end
 
 if __FILE__ == $0
 	puts "Type help for help."
-	list = (Equations.instance_methods - [:method_missing]).map(&:to_s)
+	list = (Equations.instance_methods(false) - [:method_missing]).map(&:to_s).map { |eq|
+		eq.gsub(/_/, "-")
+	}
 	comp = proc { |s| list.grep(/^#{Regexp.escape(s)}/) }
 	Readline.completion_append_character = " "
 	Readline.completion_proc = comp
+
 	loop do
 		command, *variables = Readline::readline("> ", true).downcase.strip.squeeze(" ").split(" ")
 		unless command.nil?

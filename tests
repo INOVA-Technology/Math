@@ -76,3 +76,5 @@ describe "Cli" do
 	end
 
 end
+
+# write tests for importing equations
