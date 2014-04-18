@@ -54,7 +54,7 @@ describe Equations do
 
 end
 
-describe "Cli" do
+describe Cli do
 
 	before do
 		@cli = Cli.new
@@ -72,6 +72,21 @@ describe "Cli" do
 			@cli.doesnt_matter("123.3").wont_equal @error_msg
 			@cli.doesnt_matter("12e3").wont_equal @error_msg
 			@cli.doesnt_matter("1e-4").wont_equal @error_msg
+		end
+	end
+
+end
+
+describe "flags" do
+
+	describe "--load" do
+
+		before do
+			@cli = Cli.new
+		end
+
+		it "must load equations" do
+			define_equation("sample_equations")	
 		end
 	end
 

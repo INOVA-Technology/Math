@@ -7,10 +7,10 @@ require "readline"
 # 			  3 => "k", 6 => "M", 9 => "G",
 # 			  12 => "T", 15 => "P", 18 => "E" }
 
-def define_equation clas, file
+def define_equation file
 	File.foreach(file) { |line|
 		name, var, equation = line.split(":")
-		clas.instance_eval %[
+		Equations.class_eval %[
 			def #{name}(#{var})
 				#{equation}
 			end
@@ -97,7 +97,7 @@ cli = Cli.new
 case ARGV[0]
 when "-l", "--load"
 	ARGV.shift
-	define_equation(cli.equations, ARGV.shift)
+	define_equation(ARGV.shift)
 	# I will add more stuff here
 end
 
