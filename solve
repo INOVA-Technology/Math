@@ -98,6 +98,7 @@ case ARGV[0]
 when "-l", "--load"
 	ARGV.shift
 	define_equation(cli.equations, ARGV.shift)
+# I will add more stuff here
 end
 
 if __FILE__ == $0
@@ -112,7 +113,13 @@ if __FILE__ == $0
 		.downcase.strip.squeeze(" ").split(" ")
 		unless command.nil?
 			command.gsub!(/-/, "_")
-			puts cli.send(command, *variables)
+			puts begin
+				cli.send(command, *variables)
+			rescue ArgumentError
+				args = cli.equations.method(command).arity || 0
+				arg_list = (1..args).map { |i| "<number_#{i}>" }.join(" ")
+				"Usage: #{command} #{arg_list}"
+			end
 		end
 	end
 end
