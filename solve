@@ -18,10 +18,9 @@ def define_equation clas, file
 	}
 end
 
-class Array
-	def swap_underscores
-		map { |i| i.to_s.gsub(/_/, "-")}
-	end
+def all_formulas
+	(Equations.instance_methods(false) - [:method_missing])
+	.map { |i| i.to_s.gsub(/_/, "-") }
 end
 
 class Equations
@@ -73,7 +72,7 @@ class Cli
 		"You also can use e for scientific notation. Eg. 3e5 = 300000",
 		"Type quit to quit",
 		"Available Equations:",
-		(@equations.public_methods(false) - [:method_missing]).swap_underscores]
+		all_formulas]
 		
 	end
 
@@ -103,13 +102,14 @@ end
 
 if __FILE__ == $0
 	puts "Type help for help."
-	list = (Equations.instance_methods(false) - [:method_missing]).swap_underscores
+	list = all_formulas
 	comp = proc { |s| list.grep(/^#{Regexp.escape(s)}/) }
 	Readline.completion_append_character = " "
 	Readline.completion_proc = comp
 
 	loop do
-		command, *variables = Readline::readline("> ", true).downcase.strip.squeeze(" ").split(" ")
+		command, *variables = Readline::readline("> ", true)
+		.downcase.strip.squeeze(" ").split(" ")
 		unless command.nil?
 			command.gsub!(/-/, "_")
 			puts cli.send(command, *variables)

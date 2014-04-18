@@ -48,7 +48,7 @@ describe Equations do
 
 	describe "equation does not exist" do
 		it "must warn user" do
-			@equations.doesnt_exist(500).must_equal "That equation doesn't exist here yet."
+			@equations.doesnt_exist(500).must_equal "That equation doesn't exist here. (yet)"
 		end
 	end
 
