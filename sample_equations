@@ -1,0 +1,2 @@
+add_then_cube:var1, var2:(var1 + var2) ** 3
+equation_name:variable:variable - 1
