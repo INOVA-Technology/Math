@@ -65,7 +65,7 @@ class Cli
 	end
 
 	def help
-		["To use an equation, just type something like this: hz_with_m 100",
+		["To use an equation, just type something like this: hz-with-m 100",
 		"Thats 100 meters, converted to hertz",
 		"Or something like this: pythgrn-thrm-with-b-c 4 5",
 		"That's a^2 = 5^2 - 4^2, or more familiarly, a^2 + 4^2 = 5^2",
