@@ -1,4 +1,4 @@
-## It does your math homework!
+# It does your math homework!
 
 Well a lot of it. Here's how you start it:
 
@@ -13,7 +13,7 @@ When you have the equation you want to use, type it at the prompt, followed by a
 
 Pretty simple right? It also has support for tab completion, so if you type `py` and then press tab, it'll finish it as `pythgrn-thrm-with-` and show you the options that you can finish it as.
 
-# Using -l or --load
+## Using -l or --load
 
 You can actually create a file with additional equations to load, and it very simple!
 
