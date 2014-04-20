@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require "readline"
+require "cmath"
 
 # PREFIXES = { -15 => "f", -12 => "p", -9 => "n",
 # 			 -6 => "µ", -3 => "m", 0 => "",
@@ -34,8 +35,10 @@ class Equations
 	alias_method :hz_with_m, :m_with_hz
 
 	def qudrtc_frml_with_a_b_c(a, b, c)
-		positive = (-b + Math.sqrt(b ** 2 - 4 * a * c)) / 2 * a
-		negative = (-b - Math.sqrt(b ** 2 - 4 * a * c)) / 2 * a
+		positive = (-b + CMath.sqrt(b ** 2 - 4 * a * c)) / 2 * a
+		negative = (-b - CMath.sqrt(b ** 2 - 4 * a * c)) / 2 * a
+
+		# possibly add positive and negative .to_r as well as the float
 		[positive, negative]
 	end
 
@@ -104,9 +107,8 @@ end
 if __FILE__ == $0
 	puts "Type help for help."
 	list = all_formulas
-	comp = proc { |s| list.grep(/^#{Regexp.escape(s)}/) }
 	Readline.completion_append_character = " "
-	Readline.completion_proc = comp
+	Readline.completion_proc = proc { |s| list.grep(/^#{Regexp.escape(s)}/) }
 
 	loop do
 		command, *variables = Readline::readline("> ", true)
