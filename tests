@@ -86,7 +86,8 @@ describe "flags" do
 		end
 
 		it "must load equations" do
-			define_equation("sample_equations")	
+			# in progress
+			define_equation("sample_equations")
 		end
 	end
 

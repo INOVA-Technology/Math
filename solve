@@ -8,7 +8,7 @@ require "cmath"
 # 			  3 => "k", 6 => "M", 9 => "G",
 # 			  12 => "T", 15 => "P", 18 => "E" }
 
-def define_equation file
+def define_equation(file)
 	File.foreach(file) { |line|
 		name, var, equation = line.split(":")
 		Equations.class_eval %[
@@ -106,9 +106,10 @@ end
 
 if __FILE__ == $0
 	puts "Type help for help."
-	list = all_formulas
 	Readline.completion_append_character = " "
-	Readline.completion_proc = proc { |s| list.grep(/^#{Regexp.escape(s)}/) }
+	Readline.completion_proc = proc { |s|
+		all_formulas.grep(/^#{Regexp.escape(s)}/)
+	}
 
 	loop do
 		command, *variables = Readline::readline("> ", true)
@@ -118,7 +119,11 @@ if __FILE__ == $0
 			puts begin
 				cli.send(command, *variables)
 			rescue ArgumentError
-				cli.equations.method(command).arity
+				argc = if cli.public_methods(false).include? command.to_sym
+					cli.method(command).arity
+				else
+					cli.equations.method(command).arity
+				end
 				arg_list = (1..argc).map { |i| "<number_#{i}>" }.join(" ")
 				"Usage: #{command} #{arg_list}"
 			end
