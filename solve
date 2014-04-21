@@ -2,6 +2,7 @@
 
 require "readline"
 require "cmath"
+require "bigdecimal"
 
 # PREFIXES = { -15 => "f", -12 => "p", -9 => "n",
 # 			 -6 => "µ", -3 => "m", 0 => "",
@@ -82,7 +83,7 @@ class Cli
 	def method_missing(m, *args, &block)
 		# checks if it only contains numbers, math symbols, and e
 		if args.all? { |arg| arg.match(/\A[\d+\-*\/.e ]+\z/) }
-			args.map! { |arg| eval(arg) }
+			args.map! { |arg| BigDecimal.new(arg).to_f }
 			@equations.send(m, *args)
 		else
 			"Invalid number"
